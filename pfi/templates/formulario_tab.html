@@ -1,0 +1,23 @@
+{% extends 'page.html' %}
+
+{% block conteudo %}
+<div class="formulario  container mt-5">
+    <h2 class="text-center alert alert-dark">
+        {{form_titulo}}
+        
+    </h2>
+    
+
+    <form method="POST" > {% csrf_token%}
+        <table class="tabela horizontal_center ">
+            {{form.as_table}}
+            
+        </table>
+        <div class="horizontal_right">
+            <a href="{{view.success_url}}" class="btn btn-secondary">Voltar </a>
+            <input class="btn btn-success" type="submit"  value="Enviar">
+        </div>
+    </form>
+    
+</div>
+{% endblock conteudo %}

@@ -1,0 +1,19 @@
+{% load static %}
+<html lang="pt-br">
+<!-- inclui o head (cabeçalho) -->
+{% include 'componentes/head.html' %}
+<body>
+    <!-- inclui o menu -->
+    {% include 'componentes/menu.html' %}
+
+    <div class="frame mt-3 p-1" style="min-height: 70vh;">
+        {% block conteudo %}
+            
+        {% endblock %}
+    </div>  
+    
+  
+    <!-- inclui o footer (rodapé da página) -->
+    {% include 'componentes/footer.html' %}
+</body>
+</html>

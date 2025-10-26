@@ -1,0 +1,29 @@
+{% extends 'page.html' %}
+
+{% block conteudo %}
+<div class="formulario  container mt-5">
+    <h2 class="text-center alert alert-dark">
+        {{form_titulo}}
+    </h2>
+
+    <div class="horizontal_center">    
+        <div class="container-fluid mt-3 ">
+        <div class="row justify-content-center">
+            <div class="col col-md-6 ">
+               <form method="POST"> {% csrf_token%}
+                {{form.as_p}}
+                <div class="horizontal_right">
+                    <a href="{{view.success_url}}" class="btn btn-secondary">Voltar</a>
+{#                    <input class="btn btn-success " style="width: 160px" type="submit"  value="Enviar">#}
+                    <button type="submit" class="btn btn-success " style="width: 160px" aria-label="Save">
+                      <i class="fas fa-save"></i> Salvar
+                   </button>
+                </div>
+               </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock conteudo %}

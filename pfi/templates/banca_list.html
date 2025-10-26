@@ -1,0 +1,59 @@
+{% extends 'page.html' %}
+
+{% block conteudo %}
+<div class="content container ">
+    <h2 class="text-center alert alert-dark">
+        {{form_titulo}}
+    </h2>
+
+    <div class="row">
+        <div class="d-flex " style="width: 100% !important; ">
+            <a class="btn btn-success me-2 " style="width: 120px!important; " href="{% url 'new_banca'%}">Adicionar</a>
+            <form class="d-flex p-0 m-0 w-100"   role="search">
+                <input class="form-control me-2 p-0 m-0"   type="search" placeholder="Pesquisar..." name="pesquisar" aria-label="Search"/>
+                <button class="btn btn-outline-success  " style="width: 200px !important; " type="submit"><i class="fa fa-search"></i> Pesquisar </button>
+            </form>
+
+        </div>
+        <div class="col-md-12 mt-1">
+            <table class="table table-hover">
+                <thead class='table-dark'>
+                    <tr>
+                        <th class="">Trabalho</th>
+                        <th>Aluno</th>
+                        <th>Orientador</th>
+                        <th class="text-center">Curso</th>
+                        <th class="text-center">Data</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center" >Ações</th>
+                    </tr>
+                </thead>
+                <tbody class='bg-light'>
+                    {% for banca in bancas %}
+                    <tr>
+                        <td>{{banca.trabalho.titulo}}</td>
+                        <td>{{banca.trabalho.autor.nome}}</td>
+                        <td>{{banca.trabalho.orientador.nome}}</td>
+                        <td class="text-center">{{banca.trabalho.autor.turma.curso.nome_curso_abreviado}}</td>
+                        <td class="text-center">{{banca.data_apresentacao | date:"d/M/Y H:i" }}</td>
+                        <td class="text-center">{{banca.status}}</td>
+                        <td class="text-center">
+                            <a class="text-primary"  href="{% url 'update_banca' banca.pk%}">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a class="text-danger" href="{% url 'delete_banca' banca.pk%}">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {%empty%}
+                    <p>Nenhum banca cadastrada!</p>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock conteudo %}

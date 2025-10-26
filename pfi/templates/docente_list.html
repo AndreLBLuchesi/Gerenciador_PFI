@@ -1,0 +1,48 @@
+{% extends 'page.html' %}
+
+{% block conteudo %}
+<div class="content container mt-5">
+    <h2 class="text-center alert alert-dark">
+        {{form_titulo}}
+    </h2>
+
+    <div class="row">
+        <div class="">
+            <a class="btn btn-success" href="{% url 'new_docente'%}">Novo Docente</a>
+        </div>
+        <div class="col-md-12 mt-1">
+            <table class="table table-hover">
+                <thead class='table-dark'>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Formação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody class='bg-light'>
+                    {% for docente in docentes %}
+                    <tr>
+                        <td>{{docente.nome}}</td>
+                        <td>{{docente.email}}</td>
+                        <td>{{docente.formacao}}</td>
+                        <td>
+                            <a class="text-primary"  href="{% url 'update_docente' docente.pk%}"> 
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a class="text-danger" href="{% url 'delete_docente' docente.pk%}">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {%empty%}
+                    <p>Nenhum docente cadastrado!</p>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock conteudo %}

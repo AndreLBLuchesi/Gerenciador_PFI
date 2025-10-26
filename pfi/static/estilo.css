@@ -1,0 +1,178 @@
+/* Reset */
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --spacing: 1.5rem;
+  --clr-white: rgb(245, 245, 255);
+}
+
+body {
+  background: #808cab;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+h2 {
+  font-size: 1.6rem;
+}
+h3 {
+  font-size: 1.4rem;
+}
+h4 {
+  font-size: 1.3rem;
+}
+h5 {
+  font-size: 1.2rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p label {
+    font-size: 13px;
+}
+p span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 10px;
+}
+
+.frame{
+  min-height: 55%;
+}
+
+.content {
+  max-width: 90%;
+  margin: calc(var(--spacing) * 2) auto;
+  padding: var(--spacing);
+  background: var(--clr-white);
+  box-shadow: 2px 2px 5px 5px;
+  border-radius: 5px;
+}
+
+.formulario{
+  max-width: 80%;
+  margin: calc(var(--spacing) * 2) auto;
+  padding: var(--spacing);
+  background: var(--clr-white);
+  box-shadow: 2px 2px 5px 5px;
+  border-radius: 5px;
+}
+
+.formulario p {
+  font-size: 1rem;
+}
+
+.formulario label {
+  padding-bottom: 0px;
+  margin: 0px;
+}
+
+.formulario input {
+  margin: 0px;
+}
+
+.table a{
+  text-decoration: none;
+}
+
+.tabela{
+  width: 100%;
+  text-decoration: none;
+}
+
+.tabela th{
+  text-align: right;
+}
+
+.tabela td{
+  min-width: 350px; 
+  text-decoration: none;
+}
+
+input{
+  margin: 6px;
+}
+
+.horizontal_center{
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+.horizontal_right{
+  /*display: flex; 
+   justify-content: flex-end; 
+  align-items: flex-end; */
+  float: right;
+}
+
+.menu {
+  background: #111010;
+  padding: 0 1.5rem;
+}
+
+.menu__links {
+  list-style: none;
+  display: flex;
+}
+
+.menu__links a {
+  font-size: 1.4rem;
+  display: block;
+  color: #fff;
+  padding: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.menu__links a:hover {
+    background: rgba(2, 130, 98, 0.749);
+    text-decoration: underline;
+}
+
+footer {
+  vertical-align: bottom;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+footer p {
+  font-size: 15px;
+  margin: 6px;
+}
+
+footer a {
+  font-size: medium;
+  text-decoration: none;
+}
+
+footer i {
+  font-size: 18px;
+}
+
+footer span {
+  font-size: 18px;
+}
+
+.footer-div {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.errorlist{
+    font-style: oblique;
+    color: red !important;
+    font-size: 9px;
+    padding: 0px;
+    margin: 0px;
+}
