@@ -1,0 +1,27 @@
+# Ignorar diretórios e arquivos gerados pelo PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Ignorar ambientes virtuais
+venv/
+env/
+.venv/
+
+# Arquivos e diretórios de compilação Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos temporários e de cache
+*.swp
+*~
+*.log
+*.tmp
+
+# Arquivos de build e distribuição
+build/
+dist/
+*.egg-info/
