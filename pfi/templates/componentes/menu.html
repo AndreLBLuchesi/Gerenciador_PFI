@@ -58,5 +58,22 @@
                 Bancas
             </a>
         </li>
+
+        <li>
+            {% if user.is_authenticated %}
+{#                <h2>Olá, {{ user.username }}!</h2>#}
+                <form method="POST" action="{% url 'logout' %}">  {% csrf_token%}
+                    <button type="submit" class="btn btn-success " style="width: 140px; height: 100%" aria-label="Logout" >
+                        <i class="fas fa-sign-in"></i>Sair
+                    </button>
+                </form>
+
+
+            {% else %}
+                <a type="button" class="btn btn-success " style="width: 160px" aria-label="Logar" href="{% url 'login' %}">
+                  <i class="fas fa-sign-in"></i>Entrar
+                </a>
+            {% endif %}
+        </li>
     </ul>
 </nav>

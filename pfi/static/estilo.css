@@ -176,3 +176,18 @@ footer span {
     padding: 0px;
     margin: 0px;
 }
+
+#id_username{
+    width: 100%;
+    max-width: 270px;
+    height: 28px;
+    padding: 4px;
+    border-radius: 5px;
+}
+#id_password{
+    width: 100%;
+    max-width: 270px;
+    height: 28px;
+    padding: 4px;
+    border-radius: 5px;
+}

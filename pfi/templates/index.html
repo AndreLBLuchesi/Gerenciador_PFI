@@ -2,5 +2,12 @@
 
 
 {% block conteudo %}
-<h1>Bem Vindo ao meu projeto Django</h1>
+
+    {% if user.is_authenticated %}
+        <h2>Olá, {{ user.username }}!</h2>
+{#        <a href="{% url 'logout' %}">Sair</a>#}
+    {% else %}
+        <h2>Olá, {{ user }}!</h2>
+    {% endif %}
+    <h1>Bem Vindo ao Sistema Gerenciador de PFI </h1>
 {% endblock conteudo %}

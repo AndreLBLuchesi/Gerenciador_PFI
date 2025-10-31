@@ -1,0 +1,32 @@
+{% extends "page.html" %}
+
+{% block conteudo %}
+
+    <div class="formulario  container mt-5 horizontal_center">
+    <div class="container-fluid mt-3 ">
+        <div class="row justify-content-center">
+            <div class="col col-md-6 ">
+                <h1>Entrar do Sistema</h1>
+                {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                {% endif %}
+
+                <form method="POST"
+                    action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <input type="hidden" name="next" value="{% url 'home' %}" />
+                    <div class="">
+                        <a href="{% url 'home' %}" class="btn btn-secondary" style="width: 150px">Voltar</a>
+                        <button type="submit" class="btn btn-success " style="width: 160px" aria-label="Logar">
+                          <i class="fas fa-sign-in"></i>Logar
+                       </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock conteudo %}

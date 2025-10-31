@@ -19,9 +19,14 @@ from django.urls import path
 
 from pfi import views
 
+#inportação autenticação do Django
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.pagina_inicial, name='home'), 
+    path('', views.pagina_inicial, name='home'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='login.html', next_page='home'), name='logout'),
     path('alunos/listar/', views.ListAlunos.as_view(), name='alunos'),
     path('alunos/novo/', views.CreateAluno.as_view(), name='new_aluno'),
     path('alunos/editar/<int:pk>/', views.UpdateAluno.as_view(), name='update_aluno'),
