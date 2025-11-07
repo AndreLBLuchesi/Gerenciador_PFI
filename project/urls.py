@@ -57,8 +57,10 @@ urlpatterns = [
     path('trabalhos/editar/<int:pk>/', views.UpdateTrabalho.as_view(), name='update_trabalho'),
     path('trabalhos/remover/<int:pk>/', views.DeleteTrabalho.as_view(), name='delete_trabalho'),
 
+
     path('bancas/listar/', views.ListBancas.as_view(), name='bancas'),
     path('bancas/novo/', views.CreateBanca.as_view(), name='new_banca'),
     path('bancas/editar/<int:pk>/', views.UpdateBanca.as_view(), name='update_banca'),
     path('bancas/remover/<int:pk>/', views.DeleteBanca.as_view(), name='delete_banca'),
+    path('bancas/agenda/', views.ListAgendaBanca.as_view(), name='agenda'),
 ]

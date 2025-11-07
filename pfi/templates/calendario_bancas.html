@@ -1,0 +1,47 @@
+{% extends 'page.html' %}
+{% load filtros_texto %}
+{% block conteudo %}
+<div class="content container ">
+    <h2 class="text-center alert alert-dark">
+        {{form_titulo}}
+    </h2>
+
+    <div class="row">
+        <div class="col-md-12 mt-1 table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead class='table-dark'>
+                    <tr>
+                        <th class="text-center" style="width: 100px">Data/Horário</th>
+                        <th>Aluno</th>
+                        <th>Trabalho</th>
+                        <th class="text-center">Banca</th>
+                    </tr>
+                </thead>
+                <tbody class='bg-light'>
+                    {% for banca, dia in dados %}
+                        {% if dia %}
+                            <tr>
+                              <td colspan="4" class="text-center" style="background-color: lightslategrey; font-weight: bold;"> {{banca.data_apresentacao | date:"d/F" }}</td>
+                            </tr>
+                        {% endif %}
+
+                        <tr>
+                            <td class="text-center" style="width: 100px">{{banca.data_apresentacao | date:"d/M" }} <br> {{banca.data_apresentacao | date:"H:i" }} </td>
+                            <td>{{banca.trabalho.autor.nome}}</td>
+                            <td>{{banca.trabalho.titulo}}</td>
+                            <td class="text-center">
+                                {{banca.trabalho.orientador.nome |primeira_ultima_palavra}} <br> {{banca.membro_banca1.nome | primeira_ultima_palavra}} <br> {{banca.membro_banca2.nome | primeira_ultima_palavra}}
+                            </td>
+
+                        </tr>
+
+                    {%empty%}
+                        <p>Nenhuma banca cadastrada!</p>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock conteudo %}

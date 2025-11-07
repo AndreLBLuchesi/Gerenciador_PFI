@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from pfi.forms import AlunoForm, CursoForm, DocenteForm, TrabalhoFinalForm, TurmaForm, AvaliadorForm, BancaForm
 from pfi.models import Aluno, Curso, Docente, Trabalho_Final, Turma, Avaliador, Banca
@@ -246,3 +246,44 @@ class DeleteBanca(DeleteView):
     success_url = reverse_lazy('bancas')
     context_object_name = 'registro'
     extra_context = {'form_titulo': 'Remover Banca', 'entidade': 'Banca'}
+
+class ListAgendaBanca(ListView):
+    template_name = 'calendario_bancas.html'
+    model = Banca
+    context_object_name = 'bancas'
+    extra_context = {'form_titulo': 'Agenda de Apresentações do PFI'}
+
+    def get_queryset(self):
+        # a: QuerySet
+        # a.values_list('data_apresentacao')
+        # a.__getitem__(1)
+        # a.__getitem__(2)
+        return Banca.objects.filter().order_by('data_apresentacao')
+
+    # Sobrescreve o metodo que cria a variável de contexto (enviada na requisição HTTP)
+    def get_context_data(self, **kwargs):
+        bancas = Banca.objects.filter().order_by('data_apresentacao')
+        dias = Banca.objects.filter().order_by('data_apresentacao').values_list('data_apresentacao', flat=True)
+        dias_diferentes: list = []
+        cont = -1
+        print(dias)
+
+        for b in bancas:
+            print(b)
+            if len(dias_diferentes) > 0:
+                if b.data_apresentacao.day != dias[cont].day:
+                    dias_diferentes.append(True)
+                else:
+                    dias_diferentes.append(False)
+            else:
+                dias_diferentes.append(False)
+            cont += 1
+
+        combined_data = []
+        for i in range(len(dias_diferentes)):
+            combined_data.append((bancas[i], dias_diferentes[i]))
+
+        print(dias_diferentes)
+        ctx = super(ListAgendaBanca, self).get_context_data(**kwargs)
+        ctx['dados'] = combined_data
+        return ctx

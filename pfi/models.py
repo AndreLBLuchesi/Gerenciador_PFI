@@ -86,7 +86,7 @@ class Trabalho_Final(models.Model):
     autor = models.ForeignKey(Aluno, on_delete=models.RESTRICT, blank=False, null=False)
     orientador = models.ForeignKey(Docente, on_delete=models.RESTRICT, blank=False, null=False)
     coorientador = models.ForeignKey(Avaliador, related_name='Coorientador', on_delete=models.RESTRICT, blank=True, null=True)
-    url = models.URLField(max_length=250, null=False, blank=False, verbose_name='URL')
+    url = models.URLField(max_length=250, null=True, blank=True, verbose_name='URL')
 
     def __str__(self) -> str:
         return f'{self.titulo} - {self.autor.nome} ano: {self.ano}'

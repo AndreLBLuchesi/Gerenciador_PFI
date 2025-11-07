@@ -1,79 +1,85 @@
-<nav class="menu">
-    <ul class="menu__links">
-        <li>
-            <a href="{% url 'home' %}" class="header-link">
-                Página Inicial
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'alunos' %}" class="header-link">
-                Alunos
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Orientador / Avaliador
-            </a>
-            <ul class="dropdown-menu">
-
-                <li>
-                    <a href="{% url 'docentes' %}" class="header-link">
-                        Docentes
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'avaliadores' %}" class="header-link">
-                        Avaliadores
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="{% url 'docentes' %}" class="header-link">
-                Docentes
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'avaliadores' %}" class="header-link">
-                Avaliadores
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'cursos' %}" class="header-link">
-                Cursos
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'turmas' %}" class="header-link">
-                Turmas
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'trabalhos' %}" class="header-link">
-                Trabalhos PFI
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'bancas' %}" class="header-link">
-                Bancas
-            </a>
-        </li>
-
-        <li>
-            {% if user.is_authenticated %}
-{#                <h2>Olá, {{ user.username }}!</h2>#}
-                <form method="POST" action="{% url 'logout' %}">  {% csrf_token%}
-                    <button type="submit" class="btn btn-success " style="width: 140px; height: 100%" aria-label="Logout" >
-                        <i class="fas fa-sign-in"></i>Sair
-                    </button>
-                </form>
 
 
-            {% else %}
-                <a type="button" class="btn btn-success " style="width: 160px" aria-label="Logar" href="{% url 'login' %}">
-                  <i class="fas fa-sign-in"></i>Entrar
+<nav class=" navbar-dark bg-dark">
+    <div class="container-fluid" style="display: flex; width: 100%">
+        <div style="width: 80%">
+        <ul class="menu__links" >
+            <li >
+                <a href="{% url 'home' %}" class="header-link">
+                    <i class="fas fa-home"></i>
+                    Página Inicial
                 </a>
-            {% endif %}
-        </li>
-    </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="header-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cadastros
+                </a>
+                <ul class="dropdown-menu">
+
+                    <li>
+                        <a href="{% url 'docentes' %}" class="header-link">
+                            Docentes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'avaliadores' %}" class="header-link">
+                            Avaliadores
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'alunos' %}" class="header-link">
+                            Alunos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'cursos' %}" class="header-link">
+                            Cursos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'turmas' %}" class="header-link">
+                            Turmas
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="{% url 'trabalhos' %}" class="header-link">
+                    Trabalhos PFI
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'bancas' %}" class="header-link">
+                    Bancas
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'agenda' %}" class="header-link">
+                    Agenda Apresentações
+                </a>
+            </li>
+        </ul>
+        </div>
+
+        <div  style="align-items: flex-end; width: 20%; ">
+            <ul>
+            <li >
+                {% if user.is_authenticated %}
+                    <form class="horizontal_right"  method="POST" action="{% url 'logout' %}" >  {% csrf_token%}
+                        <button type="submit" class="btn btn-success " style="width: 160px; height: 100%; font-size: 1.3rem;" aria-label="Logout" >
+                            <i class="fas fa-arrow-right-to-bracket"> </i> Sair
+                        </button>
+
+                    </form>
+                {% else %}
+                    <a type="button" class="btn btn-success horizontal_right" style="vertical-align: center; width: 160px; height: 100%; font-size: 1.3rem;" aria-label="Logar" href="{% url 'login' %}">
+                      <p style="margin-top: 12px;"><i class="fas fa-sign-in"></i> Entrar</p>
+                    </a>
+                {% endif %}
+
+            </li>
+            </ul>
+        </div>
+    </div>
 </nav>

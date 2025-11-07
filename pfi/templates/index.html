@@ -4,7 +4,7 @@
 {% block conteudo %}
 
     {% if user.is_authenticated %}
-        <h2>Olá, {{ user.username }}!</h2>
+        <h2>Olá, {{ user.first_name }}!</h2>
 {#        <a href="{% url 'logout' %}">Sair</a>#}
     {% else %}
         <h2>Olá, {{ user }}!</h2>
