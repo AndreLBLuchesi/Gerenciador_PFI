@@ -127,19 +127,19 @@ input{
 
 .menu {
   background: #111010;
-  padding: 0 1.2rem;
+  padding: 6px 1.2rem;
 }
 
 .menu__links {
   /*list-style: none;*/
     display: flex;
-    margin: 0;
+    margin: 0px 8px;
 }
 
 .menu__links a {
   font-size: 1.2rem;
   display: block;
-  color: #fff;
+  color: #fff !important;
   padding: 1.3rem;
   font-weight: bold;
   text-decoration: none;
@@ -202,15 +202,15 @@ footer span {
 
 #id_username{
     width: 100%;
-    max-width: 270px;
-    height: 28px;
-    padding: 4px;
+    #max-width: 270px;
+    #height: 28px;
+    #padding: 4px;
     border-radius: 5px;
 }
 #id_password{
     width: 100%;
-    max-width: 270px;
-    height: 28px;
-    padding: 4px;
+    #max-width: 270px;
+    #height: 28px;
+    #padding: 4px;
     border-radius: 5px;
 }

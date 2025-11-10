@@ -7,9 +7,11 @@
     </h2>
 
     <div class="row">
+        {% if user.is_authenticated %}
         <div>
             <a class="btn btn-success" href="{% url view.url_add_btn %}">{{view.label_add_btn}} </a>
         </div>
+        {% endif %}
         <div class="col-md-12 mt-1">
             <table class="table table-hover">
                 <thead class='table-dark'>
@@ -25,14 +27,16 @@
                         <td>{{item.nome}}</td>
                         <td>{{item.curso}}</td>
                         <td class="text-center">{{item.ano}}</td>
-                        <td class="text-center">
-                            <a class="text-primary"  href="{% url 'update_turma' item.pk%}"> 
-                                <i class="bi bi-pencil-fill"></i>
-                            </a>
-                            <a class="text-danger" href="{% url 'delete_turma' item.pk%}">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
+                        {% if user.is_authenticated %}
+                            <td class="text-center">
+                                <a class="text-primary"  href="{% url 'update_turma' item.pk%}">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                                <a class="text-danger" href="{% url 'delete_turma' item.pk%}">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        {% endif %}
                     </tr>
                     {%empty%}
                     <p>Nenhum curso cadastrado!</p>

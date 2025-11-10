@@ -8,7 +8,9 @@
 
     <div class="row">
         <div class="d-flex " style="width: 100% !important; ">
+            {% if user.is_authenticated %}
             <a class="btn btn-success me-2 " style="width: 120px!important; " href="{% url 'new_banca'%}">Adicionar</a>
+            {% endif %}
             <form class="d-flex p-0 m-0 w-100"   role="search">
                 <input class="form-control me-2 p-0 m-0"   type="search" placeholder="Pesquisar..." name="pesquisar" aria-label="Search"/>
                 <button class="btn btn-outline-success  " style="width: 200px !important; " type="submit"><i class="fa fa-search"></i> Pesquisar </button>
@@ -25,7 +27,9 @@
                         <th class="text-center">Curso</th>
                         <th class="text-center">Data</th>
                         <th class="text-center">Status</th>
-                        <th class="text-center" >Ações</th>
+                        {% if user.is_authenticated %}
+                            <th class="text-center" >Ações</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody class='bg-light'>
@@ -37,6 +41,7 @@
                         <td class="text-center">{{banca.trabalho.autor.turma.curso.nome_curso_abreviado}}</td>
                         <td class="text-center">{{banca.data_apresentacao | date:"d/M/Y H:i" }}</td>
                         <td class="text-center">{{banca.status}}</td>
+                        {% if user.is_authenticated %}
                         <td class="text-center">
                             <a class="text-primary"  href="{% url 'update_banca' banca.pk%}">
                                 <i class="bi bi-pencil-fill"></i>
@@ -45,6 +50,7 @@
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
+                        {% endif %}
                     </tr>
                     {%empty%}
                     <p>Nenhum banca cadastrada!</p>

@@ -71,7 +71,7 @@ class AlunoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        self.fields['ativo'].checked = True
         self.fields['turma'].widget.attrs = {'class': 'form-group form-select'}
     
 

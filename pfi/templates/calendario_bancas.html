@@ -21,13 +21,13 @@
                     {% for banca, dia in dados %}
                         {% if dia %}
                             <tr>
-                              <td colspan="4" class="text-center" style="background-color: lightslategrey; font-weight: bold;"> {{banca.data_apresentacao | date:"d/F" }}</td>
+                              <td colspan="4" class="text-center" style="background-color: lightslategrey; font-weight: bold; "> {{banca.data_apresentacao | date:"l, j  F - Y" }}</td>
                             </tr>
                         {% endif %}
 
                         <tr>
                             <td class="text-center" style="width: 100px">{{banca.data_apresentacao | date:"d/M" }} <br> {{banca.data_apresentacao | date:"H:i" }} </td>
-                            <td>{{banca.trabalho.autor.nome}}</td>
+                            <td style="font-weight: 500 ">{{banca.trabalho.autor.nome}}</td>
                             <td>{{banca.trabalho.titulo}}</td>
                             <td class="text-center">
                                 {{banca.trabalho.orientador.nome |primeira_ultima_palavra}} <br> {{banca.membro_banca1.nome | primeira_ultima_palavra}} <br> {{banca.membro_banca2.nome | primeira_ultima_palavra}}

@@ -15,8 +15,12 @@ def pagina_inicial(request):
 class ListAlunos(ListView):
     template_name = 'aluno_list.html'
     model = Aluno
+    queryset = Aluno.objects.all().order_by('nome')
     context_object_name = 'alunos'
     extra_context = {'form_titulo': 'Cadastro de Alunos'}
+
+    def get_queryset(self):
+        return Aluno.objects.all().order_by('nome')
     
 class CreateAluno(CreateView):
     form_class = AlunoForm
@@ -29,7 +33,6 @@ class CreateAluno(CreateView):
         # adicionando informação a variável de contexto
         ctx['form_titulo'] = 'Adicionar Aluno'
         return ctx
-    
 
 class UpdateAluno(UpdateView):
     model = Aluno
@@ -56,6 +59,7 @@ class DeleteAluno(DeleteView):
 class ListDocentes(ListView):
     template_name = 'docente_list.html'
     model = Docente
+    queryset = Docente.objects.all().order_by('nome')
     context_object_name = 'docentes'
     extra_context = {'form_titulo':'Cadastro de Docentes'}
     
@@ -86,7 +90,7 @@ class DeleteDocente(DeleteView):
 class ListAvaliadores(ListView):
     template_name = 'avaliador_list.html'
     model = Avaliador
-    queryset = Avaliador.objects.filter(is_active = True, docente__isnull = True)
+    queryset = Avaliador.objects.filter(is_active = True, docente__isnull = True).order_by('nome')
     ordering = ['nome']
     context_object_name = 'avaliadores'
     extra_context = {'form_titulo':'Cadastro de Avaliadores'}
@@ -117,6 +121,8 @@ class DeleteAvaliador(DeleteView):
 class ListTrabalhos(ListView):
     template_name = 'trabalho_final_list.html'
     model = Trabalho_Final
+    queryset = Trabalho_Final.objects.all().order_by('ano', 'autor__nome')
+    ordering = ['ano', 'descricao']
     context_object_name = 'trabalhos'
     extra_context = {'form_titulo': 'Cadastro de Trabalhos Finais (PFI)'}
 
@@ -150,6 +156,7 @@ class DeleteTrabalho(DeleteView):
 class ListCursos(ListView):
     template_name = 'cursos.html'
     model = Curso
+    queryset = Curso.objects.all().order_by('nome')
     context_object_name = 'cursos'
     extra_context = {'form_titulo':'Cadastro de Cursos'}
     
@@ -178,7 +185,8 @@ class DeleteCurso(DeleteView):
 class ListTurmas(ListView):
     template_name = 'page_list.html'
     model = Turma
-    queryset = Turma.objects.filter(ativo = True)
+    queryset = Turma.objects.filter(ativo = True).order_by( 'ano', 'curso__nome')
+    context_object_name = 'turmas'
     ordering = ['-ano', 'nome']
     paginate_by = 25
     context_object_name = 'itens'
@@ -254,10 +262,6 @@ class ListAgendaBanca(ListView):
     extra_context = {'form_titulo': 'Agenda de Apresentações do PFI'}
 
     def get_queryset(self):
-        # a: QuerySet
-        # a.values_list('data_apresentacao')
-        # a.__getitem__(1)
-        # a.__getitem__(2)
         return Banca.objects.filter().order_by('data_apresentacao')
 
     # Sobrescreve o metodo que cria a variável de contexto (enviada na requisição HTTP)
@@ -266,24 +270,21 @@ class ListAgendaBanca(ListView):
         dias = Banca.objects.filter().order_by('data_apresentacao').values_list('data_apresentacao', flat=True)
         dias_diferentes: list = []
         cont = -1
-        print(dias)
 
         for b in bancas:
-            print(b)
             if len(dias_diferentes) > 0:
                 if b.data_apresentacao.day != dias[cont].day:
                     dias_diferentes.append(True)
                 else:
                     dias_diferentes.append(False)
             else:
-                dias_diferentes.append(False)
+                dias_diferentes.append(True)
             cont += 1
 
         combined_data = []
         for i in range(len(dias_diferentes)):
             combined_data.append((bancas[i], dias_diferentes[i]))
 
-        print(dias_diferentes)
         ctx = super(ListAgendaBanca, self).get_context_data(**kwargs)
         ctx['dados'] = combined_data
         return ctx

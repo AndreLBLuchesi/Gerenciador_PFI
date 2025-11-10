@@ -7,9 +7,11 @@
     </h2>
 
     <div class="row">
-        <div>
-            <a class="btn btn-success" href="{% url 'new_aluno'%}">Novo Aluno</a>
-        </div>
+{#        {% if user.is_authenticated %}#}
+            <div>
+                <a class="btn btn-success" href="{% url 'new_aluno'%}">Novo Aluno</a>
+            </div>
+{#        {% endif %}#}
         <div class="col-md-12 mt-1 table-responsive table-striped">
             <table class="table table-hover">
                 <thead class='table-dark'>
@@ -17,16 +19,19 @@
                         <th>Nome</th>
                         <th>Email</th>
                         <th>turma</th>
-                        <th>Ações</th>
+                        {% if user.is_authenticated %}
+                            <th class="text-center" >Ações</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody class='bg-light'>
                     {% for aluno in alunos %}
                     <tr>
                         <td>{{aluno.nome}}</td>
-                        <td>{{aluno.email}}</td>
-                        <td>{{aluno.turma}}</td>
-                        <td>
+                        <td>{{aluno.email |default_if_none:""}}</td>
+                        <td>{{aluno.turma |default_if_none:""}}</td>
+                        {% if user.is_authenticated %}
+                        <td class="text-center">
                             <a class="text-primary"  href="{% url 'update_aluno' aluno.pk%}"> 
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
@@ -34,6 +39,7 @@
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
+                        {% endif %}
                     </tr>
                     {%empty%}
                     <p>Nenhum aluno cadastrado!</p>
