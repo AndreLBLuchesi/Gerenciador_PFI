@@ -128,7 +128,7 @@ class ListTrabalhos(ListView):
 
     def get_queryset(self):
         filter_val = self.request.GET.get('pesquisar', '')
-        return Trabalho_Final.objects.filter(Q(titulo__contains=filter_val) | Q(autor__nome__contains=filter_val) | Q(orientador__nome__icontains=filter_val))
+        return Trabalho_Final.objects.filter(Q(titulo__contains=filter_val) | Q(autor__nome__contains=filter_val) | Q(orientador__nome__icontains=filter_val)).order_by('ano', 'autor__nome')
     
 class CreateTrabalho(CreateView):
     form_class = TrabalhoFinalForm

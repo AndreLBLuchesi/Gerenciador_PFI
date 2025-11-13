@@ -22,8 +22,8 @@
             <table class="table table-hover table-striped">
                 <thead class='table-dark'>
                     <tr>
-                        <th>Título</th>
-                        <th>Autor</th>
+                        <th style="max-width: 420px">Título</th>
+                        <th style="max-width: 250px">Autor</th>
                         <th>tipo</th>
                         <th>Ano</th>
                         <th>Orientador</th>
@@ -35,8 +35,8 @@
                 <tbody class='bg-light'>
                     {% for trabalho in trabalhos %}
                     <tr>
-                        <td>{{trabalho.titulo}}</td>
-                        <td>{{trabalho.autor.nome}}</td>
+                        <td style="max-width: 420px">{{trabalho.titulo}}</td>
+                        <td style="max-width: 250px">{{trabalho.autor.nome}}</td>
                         <td>{{trabalho.tipo}}</td>
                         <td>{{trabalho.ano}}</td>
                         <td>{{trabalho.orientador.nome}}</td>

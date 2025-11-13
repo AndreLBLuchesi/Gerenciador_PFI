@@ -147,9 +147,9 @@ class TrabalhoFinalForm(forms.ModelForm):
 
         self.fields['autor'].queryset = models.Aluno.objects.filter(ativo=True)
         self.fields['autor'].widget.attrs = {'class': 'form-group form-select'}
-        self.fields['orientador'].queryset = models.Docente.objects.filter(is_active=True)
+        self.fields['orientador'].queryset = models.Docente.objects.filter(is_active=True).order_by('nome')
         self.fields['orientador'].widget.attrs = {'class': 'form-group form-select'}
-        self.fields['coorientador'].queryset = models.Avaliador.objects.filter(is_active=True, servidor_ifpr=True)
+        self.fields['coorientador'].queryset = models.Avaliador.objects.filter(is_active=True, servidor_ifpr=True).order_by('nome')
         self.fields['coorientador'].widget.attrs = {'class': 'form-group form-select'}
         self.fields['coorientador'].widget.attrs = {'class': 'form-group form-select'}
 
