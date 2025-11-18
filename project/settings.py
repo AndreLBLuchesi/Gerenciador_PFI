@@ -24,14 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9vyxnm7q)ofdn#efa)_8!u(s8prla2^o4rw5j4wm-lzu6sa9$s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 #https://pfiquedas-e92c154c51c7.herokuapp.com/
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-]
 
 
 # Application definition
@@ -80,10 +76,21 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Driver para PostgreSQL
+        'NAME': 'pfi', # Nome do banco criado no PostgreSQL
+        'USER': 'postgres', # Usuário do PostgreSQL
+        'PASSWORD': 'postgres', # Senha do usuário
+        'HOST': 'localhost', # Ou IP/hostname do servidor do banco
+        'PORT': '5432', # Porta padrão do PostgreSQL
     }
 }
 
@@ -125,15 +132,16 @@ STATIC_URL = 'static/'
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static',
-#     BASE_DIR / 'media',
-#     '/media/',
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'pfi/static',
+    BASE_DIR / 'media',
+    # '/media/',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#configuração Heroku
 django_heroku.settings(locals())

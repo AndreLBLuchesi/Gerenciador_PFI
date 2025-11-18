@@ -89,7 +89,7 @@ class Trabalho_Final(models.Model):
     url = models.URLField(max_length=250, null=True, blank=True, verbose_name='URL')
 
     def __str__(self) -> str:
-        return f'{self.titulo} - {self.autor.nome} ano: {self.ano}'
+        return f'{self.autor.nome} - {self.titulo} ano: {self.ano}'
 
 
 class Banca(models.Model):
@@ -102,4 +102,4 @@ class Banca(models.Model):
     observacao = models.TextField(null=True, blank=True)
 
     def __str__(self) -> str:
-        return f'{self.trabalho.titulo} - {self.trabalho.autor.nome} ano: {self.trabalho.ano}'
+        return f'{self.trabalho.autor.nome} - {self.trabalho.titulo} ano: {self.trabalho.ano}'

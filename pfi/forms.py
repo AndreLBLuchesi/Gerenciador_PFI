@@ -62,7 +62,7 @@ class AlunoForm(forms.ModelForm):
         model = models.Aluno
         fields = "__all__"
         widgets = {
-            'ativo': forms.CheckboxInput(attrs={'type': 'hidden', 'checked': 'checked'}),
+            # 'ativo': forms.CheckboxInput(attrs={'type': 'hidden', 'checked': 'checked'}),
             'nome': forms.TextInput( attrs={'class': 'form-group form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-group form-control'}),
             'ano_ingresso': forms.Select(attrs={'class': 'form-group form-control'},
@@ -72,6 +72,7 @@ class AlunoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['ativo'].checked = True
+        self.fields['ativo'].disabled = True
         self.fields['turma'].widget.attrs = {'class': 'form-group form-select'}
     
 
@@ -125,7 +126,7 @@ class TurmaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         self.fields['ativo'].disabled = True
-        self.fields['curso'].queryset= models.Curso.objects.filter(ativo=True)
+        self.fields['curso'].queryset= models.Curso.objects.filter(ativo=True).order_by( 'nome' )
         self.fields['curso'].widget.attrs={'class': 'form-group form-select'}
         
 class TrabalhoFinalForm(forms.ModelForm):
@@ -145,7 +146,7 @@ class TrabalhoFinalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['autor'].queryset = models.Aluno.objects.filter(ativo=True)
+        self.fields['autor'].queryset = models.Aluno.objects.filter(ativo=True).order_by('nome')
         self.fields['autor'].widget.attrs = {'class': 'form-group form-select'}
         self.fields['orientador'].queryset = models.Docente.objects.filter(is_active=True).order_by('nome')
         self.fields['orientador'].widget.attrs = {'class': 'form-group form-select'}
@@ -172,7 +173,7 @@ class BancaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['trabalho'].queryset = models.Trabalho_Final.objects.filter().order_by('ano')
+        self.fields['trabalho'].queryset = models.Trabalho_Final.objects.filter().order_by('-ano', 'autor__nome')
         self.fields['trabalho'].widget.attrs = {'class': 'form-group form-select'}
         self.fields['membro_banca1'].queryset = models.Avaliador.objects.filter().order_by('nome')
         self.fields['membro_banca1'].widget.attrs = {'class': 'form-group form-select'}
