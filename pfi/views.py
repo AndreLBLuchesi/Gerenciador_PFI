@@ -71,6 +71,13 @@ class CreateDocente(CreateView):
     success_url = reverse_lazy('docentes')    
     extra_context = {'form_titulo':'Cadastrar Docente'}
 
+    def form_valid(self, form):
+        # 'commit=False' impede o salvamento imediato no banco
+        self.object:Docente = form.save(commit=False)
+        self.object.set_password(self.object.password)
+        print(self.object.password)
+        return super().form_valid(form)  # Agora ele salva e redireciona
+
 
 class UpdateDocente(UpdateView):
     form_class = DocenteForm
@@ -78,6 +85,13 @@ class UpdateDocente(UpdateView):
     model = Docente
     success_url = reverse_lazy('docentes')
     extra_context = {'form_titulo':'Editar Docente'}
+
+    def form_valid(self, form):
+        # 'commit=False' impede o salvamento imediato no banco
+        self.object:Docente = form.save(commit=False)
+        self.object.set_password(self.object.password)
+        print(self.object.password)
+        return super().form_valid(form)  # Agora ele salva e redireciona
 
 
 class DeleteDocente(DeleteView):
@@ -102,6 +116,12 @@ class CreateAvaliador(CreateView):
     success_url = reverse_lazy('avaliadores')
     extra_context = {'form_titulo':'Cadastrar Avaliador'}
 
+    def form_valid(self, form):
+        # 'commit=False' impede o salvamento imediato no banco
+        self.object:Avaliador = form.save(commit=False)
+        self.object.set_password(self.object.password)
+        return super().form_valid(form)  # Agora ele salva e redireciona
+
 
 class UpdateAvaliador(UpdateView):
     form_class = AvaliadorForm
@@ -109,6 +129,12 @@ class UpdateAvaliador(UpdateView):
     model = Avaliador
     success_url = reverse_lazy('avaliadores')
     extra_context = {'form_titulo':'Editar Avaliador'}
+
+    def form_valid(self, form):
+        # 'commit=False' impede o salvamento imediato no banco
+        self.object:Avaliador = form.save(commit=False)
+        self.object.set_password(self.object.password)
+        return super().form_valid(form)  # Agora ele salva e redireciona
 
 
 class DeleteAvaliador(DeleteView):
