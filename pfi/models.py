@@ -6,21 +6,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
-class Avaliador(User):
-    #propriedade herdadas da classe USER
-    # first_name = models.CharField(_("first name"), max_length=150, blank=True)
-    # last_name = models.CharField(_("last name"), max_length=150, blank=True)
-    # email = models.EmailField(_("email address"), blank=True)
-    # ativo = models.BooleanField(default=True)
-    # is_staff (membro da equipe, permite logar na área de Administrador)
-
-    nome = models.CharField(max_length=150, null=False, blank=False)
-    telefone = models.CharField(verbose_name='Telefone', max_length=15, null=True, blank=True, help_text= 'Informe um telefone ou celular para contato')
-    servidor_ifpr = models.BooleanField(verbose_name='Servidor do IFPR', default=True, help_text= 'Marque essa opção caso seja Servidor do IFPR')
-
-
-    def __str__(self) -> str:
-        return f'{self.nome}'
 
 class Curso(models.Model):
     nome = models.CharField(max_length=150, null=False, blank=False)
@@ -49,6 +34,22 @@ class Turma(models.Model):
         return f'{self.nome}'
 
 
+class Avaliador(User):
+    #propriedade herdadas da classe USER
+    # first_name = models.CharField(_("first name"), max_length=150, blank=True)
+    # last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    # email = models.EmailField(_("email address"), blank=True)
+    # ativo = models.BooleanField(default=True)
+    # is_staff (membro da equipe, permite logar na área de Administrador)
+
+    nome = models.CharField(max_length=150, null=False, blank=False)
+    telefone = models.CharField(verbose_name='Telefone', max_length=15, null=True, blank=True, help_text= 'Informe um telefone ou celular para contato')
+    servidor_ifpr = models.BooleanField(verbose_name='Servidor do IFPR', default=True, help_text= 'Marque essa opção caso seja Servidor do IFPR')
+
+
+    def __str__(self) -> str:
+        return f'{self.nome}'
+
 class Docente(Avaliador):
     # ativo = models.BooleanField(default=True)
     # nome = models.CharField(max_length=150, null=False, blank=False)
@@ -67,7 +68,7 @@ class Aluno(models.Model):
     email = models.EmailField(max_length=50, null=True, blank=True)
     ano_ingresso = models.IntegerField(
         validators=[MinValueValidator(2010), MaxValueValidator(datetime.date.today().year)])  # ano atual
-    turma = models.ForeignKey(Turma, on_delete=models.RESTRICT, blank=False, null=False)
+    turma = models.ForeignKey(Turma, on_delete=models.RESTRICT, blank=True, null=True)
 
     def __str__(self) -> str:
         return f'{self.nome} - {self.turma}'

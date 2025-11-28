@@ -9,9 +9,9 @@
 
     <div class="row">
         <div class="d-flex " style="width: 100% !important; ">
-{#            {% if user.is_authenticated %}#}
+            {% if user.is_authenticated %}
                 <a class="btn btn-success me-2 " style="width: 120px!important; " href="{% url 'new_trabalho'%}">Adicionar</a>
-{#            {% endif %}#}
+            {% endif %}
             <form class="d-flex p-0 m-0 w-100"   role="search">
                 <input class="form-control me-2 p-0 m-0"   type="search" placeholder="Pesquisar..." name="pesquisar" aria-label="Search"/>
                 <button class="btn btn-outline-success  " style="width: 200px !important; " type="submit"><i class="fa fa-search"></i> Pesquisar </button>

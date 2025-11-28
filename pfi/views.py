@@ -5,6 +5,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from pfi.forms import AlunoForm, CursoForm, DocenteForm, TrabalhoFinalForm, TurmaForm, AvaliadorForm, BancaForm
 from pfi.models import Aluno, Curso, Docente, Trabalho_Final, Turma, Avaliador, Banca
 
+from django.db.models.functions import Lower
 
 # Create your views here.
 
@@ -20,7 +21,8 @@ class ListAlunos(ListView):
     extra_context = {'form_titulo': 'Cadastro de Alunos'}
 
     def get_queryset(self):
-        return Aluno.objects.all().order_by('nome')
+        return Aluno.objects.all().order_by(Lower('nome'))
+        # resultado = sorted(Aluno.objects.all(), cmp=lambda a,b: locale.strcoll(a.nome, b.nome)) #remover acentuação
     
 class CreateAluno(CreateView):
     form_class = AlunoForm
@@ -59,7 +61,7 @@ class DeleteAluno(DeleteView):
 class ListDocentes(ListView):
     template_name = 'docente_list.html'
     model = Docente
-    queryset = Docente.objects.all().order_by('nome')
+    queryset = Docente.objects.all().order_by(Lower('nome'))
     context_object_name = 'docentes'
     extra_context = {'form_titulo':'Cadastro de Docentes'}
     
@@ -104,7 +106,7 @@ class DeleteDocente(DeleteView):
 class ListAvaliadores(ListView):
     template_name = 'avaliador_list.html'
     model = Avaliador
-    queryset = Avaliador.objects.filter(is_active = True, docente__isnull = True).order_by('nome')
+    queryset = Avaliador.objects.filter(is_active = True, docente__isnull = True).order_by(Lower('nome'))
     ordering = ['nome']
     context_object_name = 'avaliadores'
     extra_context = {'form_titulo':'Cadastro de Avaliadores'}
@@ -147,14 +149,14 @@ class DeleteAvaliador(DeleteView):
 class ListTrabalhos(ListView):
     template_name = 'trabalho_final_list.html'
     model = Trabalho_Final
-    queryset = Trabalho_Final.objects.all().order_by('ano', 'autor__nome')
-    ordering = ['ano', 'descricao']
+    queryset = Trabalho_Final.objects.all().order_by('ano', Lower('autor__nome'))
+    # ordering = ['ano', 'descricao']
     context_object_name = 'trabalhos'
     extra_context = {'form_titulo': 'Cadastro de Trabalhos Finais (PFI)'}
 
     def get_queryset(self):
         filter_val = self.request.GET.get('pesquisar', '')
-        return Trabalho_Final.objects.filter(Q(titulo__contains=filter_val) | Q(autor__nome__contains=filter_val) | Q(orientador__nome__icontains=filter_val)).order_by('ano', 'autor__nome')
+        return Trabalho_Final.objects.filter(Q(titulo__contains=filter_val) | Q(autor__nome__contains=filter_val) | Q(orientador__nome__icontains=filter_val)).order_by('ano',  Lower('autor__nome'))
     
 class CreateTrabalho(CreateView):
     form_class = TrabalhoFinalForm
@@ -182,7 +184,7 @@ class DeleteTrabalho(DeleteView):
 class ListCursos(ListView):
     template_name = 'cursos.html'
     model = Curso
-    queryset = Curso.objects.all().order_by('nome')
+    queryset = Curso.objects.all().order_by(Lower('nome'))
     context_object_name = 'cursos'
     extra_context = {'form_titulo':'Cadastro de Cursos'}
     
@@ -249,13 +251,14 @@ class DeleteTurma(DeleteView):
 class ListBancas(ListView):
     template_name = 'banca_list.html'
     model = Banca
+    queryset = Banca.objects.all().order_by(Lower('trabalho__autor__nome'))
     context_object_name = 'bancas'
     extra_context = {'form_titulo': 'Cadastro de Bancas'}
 
     def get_queryset(self):
         filter_val = self.request.GET.get('pesquisar', '')
         return Banca.objects.filter(Q(trabalho__titulo__contains=filter_val) | Q(trabalho__autor__nome__contains=filter_val) | Q(
-            trabalho__orientador__nome__contains=filter_val))
+            trabalho__orientador__nome__contains=filter_val)).order_by(Lower('trabalho__autor__nome'))
 
 
 class CreateBanca(CreateView):
@@ -288,12 +291,20 @@ class ListAgendaBanca(ListView):
     extra_context = {'form_titulo': 'Agenda de Apresentações do PFI'}
 
     def get_queryset(self):
-        return Banca.objects.filter().order_by('data_apresentacao')
+        filter_val = self.request.GET.get('pesquisar', '')
+        return Banca.objects.filter(Q(trabalho__titulo__contains=filter_val) | Q(trabalho__autor__nome__contains=filter_val) | Q(
+            trabalho__orientador__nome__contains=filter_val)).order_by(Lower('trabalho__autor__nome')).order_by('data_apresentacao')
 
     # Sobrescreve o metodo que cria a variável de contexto (enviada na requisição HTTP)
     def get_context_data(self, **kwargs):
-        bancas = Banca.objects.filter().order_by('data_apresentacao')
-        dias = Banca.objects.filter().order_by('data_apresentacao').values_list('data_apresentacao', flat=True)
+        # bancas = Banca.objects.filter().order_by('data_apresentacao')
+        filter_val = self.request.GET.get('pesquisar', '')
+        bancas = Banca.objects.filter(
+            Q(trabalho__titulo__contains=filter_val) | Q(trabalho__autor__nome__contains=filter_val) | Q(
+                trabalho__orientador__nome__contains=filter_val) | Q(membro_banca1__nome__contains=filter_val)
+                | Q(membro_banca2__nome__contains=filter_val)).order_by(Lower('trabalho__autor__nome')).order_by(
+            'data_apresentacao')
+        dias = bancas.values_list('data_apresentacao', flat=True)
         dias_diferentes: list = []
         cont = -1
 
